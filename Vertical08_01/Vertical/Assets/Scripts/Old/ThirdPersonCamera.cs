@@ -19,7 +19,7 @@ public class ThirdPersonCamera : MonoBehaviour
     {
 
     transform.position=Vector3.Lerp(transform.position,targettofollow.position,speed*Time.deltaTime); //la funcion lerp sirve para hacer una transición fluida entre dos puntos
-    transform.LookAt(targettolook);  
+    transform.LookAt(targettolook);
     
     }
 }
