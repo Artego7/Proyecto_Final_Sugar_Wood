@@ -97,7 +97,7 @@ public class PlayerAction : MonoBehaviour
             rb.drag = 0f;
         }
         
-        print(rb.velocity);
+        //print(rb.velocity);
         //IEnumerator AddDrag()
         //{
         //    while (rb.velocity != new Vector3(0, 0, 0))
