@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class PlayerAction : MonoBehaviour
 {
+    [Header("Player")]
     [SerializeField]
-    Player player;
+    Player playerSO;
 
     Rigidbody rb;
 
@@ -15,10 +16,10 @@ public class PlayerAction : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
 
-        player.isOnSand = false;
-        player.isTouchingGround = true;
-        player.isClimbing = false;
-        player.isJumping = false;
+        playerSO.isOnSand = false;
+        playerSO.isTouchingGround = true;
+        playerSO.isClimbing = false;
+        playerSO.isJumping = false;
         
     }
 
@@ -32,22 +33,22 @@ public class PlayerAction : MonoBehaviour
 
         if (Input.GetKey(KeyCode.LeftShift))
         {
-            movement(player.maxSpeed);
+            movement(playerSO.maxSpeed);
         }
-        else if (player.isOnSand)
+        else if (playerSO.isOnSand)
         {
-            movement(player.slowSpeed);
+            movement(playerSO.slowSpeed);
         }
         else
         {
-            movement(player.walkSpeed);
+            movement(playerSO.walkSpeed);
         }
-        if (!player.isClimbing)
+        if (!playerSO.isClimbing)
         {
-            jump(player.jumpForce);
-        }else if (player.isOnSand)
+            jump(playerSO.jumpForce);
+        }else if (playerSO.isOnSand)
         {
-            jump(player.slowJumpForce);
+            jump(playerSO.slowJumpForce);
         }
 
         climb();
@@ -56,7 +57,7 @@ public class PlayerAction : MonoBehaviour
     void movement(float playerSpeed)
     {
         //Front
-        if (!player.isClimbing)
+        if (!playerSO.isClimbing)
         {
             if (Input.GetKey(KeyCode.W) && rb.drag == 0f)
             {
@@ -64,7 +65,7 @@ public class PlayerAction : MonoBehaviour
                 //anim.GetComponent<Animator>().SetBool("Walk", true);
             }
         }
-        if (!player.isClimbing || player.isTouchingGround)
+        if (!playerSO.isClimbing || playerSO.isTouchingGround)
         {
             //Back
             if (Input.GetKey(KeyCode.S) && rb.drag == 0f)
@@ -87,7 +88,7 @@ public class PlayerAction : MonoBehaviour
         }
         if (!Input.anyKey)
         {
-            rb.drag = player.dragForce;
+            rb.drag = playerSO.dragForce;
             //StartCoroutine(AddDrag());
         }
         if (rb.velocity == new Vector3(0,0,0) || Input.anyKey)
@@ -109,36 +110,36 @@ public class PlayerAction : MonoBehaviour
         //    rb.angularVelocity = Vector3.zero;
         //    rb.drag = 0;
         //}
-        rb.velocity = Vector3.ClampMagnitude(rb.velocity, player.walkSpeed);
+        rb.velocity = Vector3.ClampMagnitude(rb.velocity, playerSO.walkSpeed);
 
     }
 
     void jump(float jumpForce)
     {
-        if (!player.isJumping)
+        if (!playerSO.isJumping)
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                rb.AddForce(player.goUp * jumpForce, ForceMode.Impulse);
+                rb.AddForce(playerSO.goUp * jumpForce, ForceMode.Impulse);
                 //anim.GetComponent<Animator>().SetBool("Jump",true);
-                player.isJumping = true;
+                playerSO.isJumping = true;
             }
         }
     }
 
     void climb()
     {
-        if (player.isClimbing)
+        if (playerSO.isClimbing)
         {
             if (Input.GetKey(KeyCode.W) && rb.drag == 0f)
             {
                 print("gola");
-                rb.AddForce(rb.velocity.x, transform.up.y * player.climbForce, rb.velocity.z);
+                rb.AddForce(rb.velocity.x, transform.up.y * playerSO.climbForce, rb.velocity.z);
                 //anim.GetComponent<Animator>().SetBool("Climb",true);
             }
             else if(Input.GetKey(KeyCode.S) && rb.drag == 0f)
             {
-                rb.AddForce(player.goDown * -player.climbForce);
+                rb.AddForce(playerSO.goDown * -playerSO.climbForce);
                 //anim.GetComponent<Animator>().SetBool("Climb",true);
             }
             else
@@ -153,12 +154,12 @@ public class PlayerAction : MonoBehaviour
     {
         if (other.tag == "wall" && Input.GetKey(KeyCode.W))
         {
-            player.isClimbing = true;
+            playerSO.isClimbing = true;
         }
 
         if (other.tag == "sand")
         {
-            player.isOnSand = true;
+            playerSO.isOnSand = true;
         }
     }
 
@@ -166,12 +167,12 @@ public class PlayerAction : MonoBehaviour
     {
         if (other.tag == "wall" && !Input.GetKey(KeyCode.W))
         {
-            player.isClimbing = false;
+            playerSO.isClimbing = false;
         }
 
         if (other.tag == "sand")
         {
-            player.isOnSand = false;
+            playerSO.isOnSand = false;
         }
     }
 
@@ -179,8 +180,8 @@ public class PlayerAction : MonoBehaviour
     {
         if (collision.collider.tag == "floor" || collision.collider.tag == "platform" || collision.collider.tag == "button")
         {
-            player.isJumping = false;
-            player.isTouchingGround = true;
+            playerSO.isJumping = false;
+            playerSO.isTouchingGround = true;
             //anim.GetComponent<Animator>().SetBool("IsInAir?",false);
         }
     }
@@ -189,7 +190,7 @@ public class PlayerAction : MonoBehaviour
     {
         if (collision.collider.tag == "floor" || collision.collider.tag == "platform" || collision.collider.tag == "button")
         {
-            player.isTouchingGround = false;
+            playerSO.isTouchingGround = false;
             //anim.GetComponent<Animator>().SetBool("IsInAir?",false);
         }
     }

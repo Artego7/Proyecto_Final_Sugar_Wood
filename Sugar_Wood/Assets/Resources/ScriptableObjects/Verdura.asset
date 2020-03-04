@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1ee9f3c9ebda04a408d76f38b5d445e2, type: 3}
+  m_Script: {fileID: 11500000, guid: f5dd67c3a1e43ed4f929db6b656b30a1, type: 3}
   m_Name: Verdura
   m_EditorClassIdentifier: 
-  walkSpeed: 0
-  runSpeed: 0
-  jumpForce: 0
+  walkSpeed: 5
+  runSpeed: 7
+  jumpForce: 5
   isSeeingPlayer: 0

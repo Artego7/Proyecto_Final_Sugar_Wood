@@ -12,17 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb90c13060679e645b519d7a89e10e92, type: 3}
   m_Name: Player
   m_EditorClassIdentifier: 
-  walkSpeed: 6
-  maxSpeed: 10
-  slowSpeed: 3.5
-  jumpForce: 5
+  maxSpeed: 12
+  walkSpeed: 8
+  slowSpeed: 4
+  maxJumpForce: 0
+  jumpForce: 8
+  slowJumpForce: 0
   climbForce: 3
   goUp: {x: 0, y: 1, z: 0}
   goDown: {x: 0, y: -1, z: 0}
   weight: 50
   weightDecrees: 5
   dragForce: 1.5
+  isTouchingGround: 0
   isJumping: 0
   isClimbing: 0
-  isTouchingGround: 1
   isOnSand: 0

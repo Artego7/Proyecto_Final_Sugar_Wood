@@ -24,9 +24,5 @@ public class CameraFollow : MonoBehaviour
     {
         transform.position = Vector3.Lerp(transform.position, camRot.position, cameraSO.delay * Time.deltaTime);
         transform.LookAt(camDummy);
-<<<<<<< HEAD
-=======
-
->>>>>>> 8946b0cb6be74cbda7e99576b32dc271a4455a96
     }
 }
