@@ -17,11 +17,14 @@ MonoBehaviour:
   jumpForce: 5
   rotationSpeed: 5
   distanceVision: 40
-  positionVision: {x: 5.905882e-14, y: 0, z: 5.230513}
-  sizeVision: {x: 10.362001, y: 1, z: 11.461026}
+  positionVision: {x: 0, y: 0.99, z: 3.97}
+  sizeVision: {x: 13.81, y: 3.3, z: 16.38}
   isTriggerVision: 1
   positionDetection: {x: -0, y: 0, z: 0}
-  radiusDetection: 16.180233
+  radiusDetection: 27.46
   isTriggerDetection: 1
-  isSeeingPlayer: 1
+  positionHide: {x: 0, y: 0, z: 0}
+  radiusHide: 16.07
+  isTriggerHide: 1
+  isSeeingPlayer: 0
   isDetectingPlayer: 0

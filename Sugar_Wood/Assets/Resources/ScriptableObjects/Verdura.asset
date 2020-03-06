@@ -15,4 +15,13 @@ MonoBehaviour:
   walkSpeed: 5
   runSpeed: 7
   jumpForce: 5
+  rotationSpeed: 5
+  distanceVision: 40
+  positionVision: {x: 5.905882e-14, y: 0, z: 5.230513}
+  sizeVision: {x: 10.362, y: 1, z: 11.46103}
+  isTriggerVision: 1
+  positionDetection: {x: 0, y: 0, z: 0}
+  radiusDetection: 16.18023
+  isTriggerDetection: 1
   isSeeingPlayer: 0
+  isDetectingPlayer: 0

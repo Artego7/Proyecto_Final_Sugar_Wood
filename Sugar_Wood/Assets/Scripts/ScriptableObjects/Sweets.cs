@@ -32,6 +32,12 @@ public class Sweets : ScriptableObject
     public bool isTriggerDetection;
     [Space(10)]
 
+    [Header("Set Hide Area")]
+    public Vector3 positionHide;
+    public float radiusHide;
+    public bool isTriggerHide;
+    [Space(10)]
+
     //-----------------//
 
     [Header("Booleans")]

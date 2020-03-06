@@ -16,11 +16,13 @@ public class CandyAction : MonoBehaviour
     Transform triggerDetecting;
     SphereCollider triggerDetectingCol;
 
+    Transform triggerHiding;
+    SphereCollider triggerHidingCol;
+
     [Header("Sweet ScriptableObject")]
     [SerializeField]
     Sweets candySO;
 
-    // Start is called before the first frame update
     void Start()
     {
         sweet = GetComponent<Transform>();
@@ -39,23 +41,34 @@ public class CandyAction : MonoBehaviour
         triggerDetectingCol.center = candySO.positionDetection;
         triggerDetectingCol.radius = candySO.radiusDetection;
         triggerDetectingCol.isTrigger = candySO.isTriggerDetection;
+        triggerHidingCol.center = candySO.positionDetection;
+        triggerHidingCol.radius = candySO.radiusDetection;
+        triggerHidingCol.isTrigger = candySO.isTriggerDetection;
 
         //---------------//
     }
 
-    // Update is called once per frame
     void Update()
     {
         DetectingPlayer();
         FollowPlayer();
-    }
 
+        //-----------TEMP-----------//
+        triggerSeeingCol.center = candySO.positionVision;
+        triggerSeeingCol.size = candySO.sizeVision;
+        triggerDetectingCol.center = candySO.positionDetection;
+        triggerDetectingCol.radius = candySO.radiusDetection;
+        triggerHidingCol.center = candySO.positionDetection;
+        triggerHidingCol.radius = candySO.radiusDetection;
+        //-----------TEMP-----------//
+    }
 
     void DetectingPlayer()
     {
         if (candySO.isDetectingPlayer)
         {
-            sweet.rotation = Quaternion.Slerp(triggerSeeing.rotation, Quaternion.LookRotation(player.position - triggerSeeing.position), candySO.rotationSpeed * Time.deltaTime);
+            sweet.rotation = Quaternion.Slerp(triggerSeeing.rotation, 
+                Quaternion.LookRotation(player.position - triggerSeeing.position), candySO.rotationSpeed * Time.deltaTime);
             RaycastHit whatIsInFront;
             Debug.DrawRay(triggerSeeing.position, triggerSeeing.forward * candySO.distanceVision, Color.blue, 0.1f);
             if (Physics.Raycast(triggerSeeing.position, triggerSeeing.forward, out whatIsInFront, candySO.distanceVision))
