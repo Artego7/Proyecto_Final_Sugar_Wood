@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class VegetableAction: MonoBehaviour
+public class VegetableAction : MonoBehaviour
 {
     [Header("Player")]
     [SerializeField]
@@ -10,8 +10,6 @@ public class VegetableAction: MonoBehaviour
     [Space(3)]
 
     Transform vegetable;
-    Transform triggerSeeing;
-    BoxCollider triggerSeeingCol;
 
     Transform triggerDetecting;
     SphereCollider triggerDetectingCol;
@@ -20,45 +18,54 @@ public class VegetableAction: MonoBehaviour
     [SerializeField]
     Vegetables vegetableSO;
 
+    //-------TEMP-------//
+    float maxDistance = 50f;
+    float minDistance = 25f;
+    Vector3 startPosition;
+    //-------TEMP-------//
+
     void Start()
     {
         vegetable = GetComponent<Transform>();
-        triggerSeeing = transform.GetChild(0).GetComponent<Transform>();
-        triggerSeeingCol = transform.GetChild(0).GetComponent<BoxCollider>();
-        triggerDetecting = transform.GetChild(1).GetComponent<Transform>();
-        triggerDetectingCol = transform.GetChild(1).GetComponent<SphereCollider>();
+        triggerDetecting = transform.GetChild(0).GetComponent<Transform>();
+        triggerDetectingCol = transform.GetChild(0).GetComponent<SphereCollider>();
+        startPosition = transform.position;
 
         //---------------//
 
         vegetableSO.isSeeingPlayer = false;
         vegetableSO.isDetectingPlayer = false;
-        triggerSeeingCol.center = vegetableSO.positionVision;
-        triggerSeeingCol.size = vegetableSO.sizeVision;
-        triggerSeeingCol.isTrigger = vegetableSO.isTriggerVision;
         triggerDetectingCol.center = vegetableSO.positionDetection;
         triggerDetectingCol.radius = vegetableSO.radiusDetection;
         triggerDetectingCol.isTrigger = vegetableSO.isTriggerDetection;
-
+        //vegetable.startPosition = startPosition;
         //---------------//
     }
 
     void Update()
     {
         DetectingPlayer();
-        FollowPlayer();
+        //FollowPlayer();
+        //-----------TEMP-----------//
+        triggerDetectingCol.center = vegetableSO.positionDetection;
+        triggerDetectingCol.radius = vegetableSO.radiusDetection;
+        //-----------TEMP-----------//
     }
 
     void DetectingPlayer()
     {
-        if (vegetableSO.isDetectingPlayer)
+        //if (vegetableSO.isDetectingPlayer)
+        if (Vector3.Distance(transform.position, player.position) < maxDistance
+            && Vector3.Distance(transform.position, player.position) < minDistance)
         {
-            vegetable.rotation = Quaternion.Slerp(triggerSeeing.rotation, 
-                Quaternion.LookRotation(player.position - triggerSeeing.position), vegetableSO.rotationSpeed * Time.deltaTime);
+            vegetable.rotation = Quaternion.Slerp(transform.rotation,
+                Quaternion.LookRotation(player.position - transform.position), vegetableSO.rotationSpeed * Time.deltaTime);
             RaycastHit whatIsInFront;
-            Debug.DrawRay(triggerSeeing.position, triggerSeeing.forward * vegetableSO.distanceVision, Color.blue, 0.1f);
-            if (Physics.Raycast(triggerSeeing.position, triggerSeeing.forward, out whatIsInFront, vegetableSO.distanceVision))
+            Debug.DrawRay(transform.position, transform.forward * vegetableSO.distanceVision, Color.blue, 0.1f);
+            if (Physics.Raycast(transform.position, transform.forward, out whatIsInFront, vegetableSO.distanceVision))
             {
-                if(whatIsInFront.collider.tag == "Player")
+                vegetable.position += vegetable.forward * vegetableSO.walkSpeed * Time.deltaTime;
+                if (whatIsInFront.collider.tag == "Player")
                 {
                     vegetableSO.isSeeingPlayer = true;
                 }
@@ -67,14 +74,19 @@ public class VegetableAction: MonoBehaviour
                     vegetableSO.isSeeingPlayer = false;
                 }
             }
+            else
+            {
+                vegetable.rotation = Quaternion.Slerp(transform.rotation,
+                    Quaternion.LookRotation(startPosition - transform.position), vegetableSO.rotationSpeed * Time.deltaTime);
+            }
         }
     }
 
     void FollowPlayer()
     {
-        if(vegetableSO.isDetectingPlayer && vegetableSO.isSeeingPlayer)
+        if (vegetableSO.isSeeingPlayer)
         {
-            vegetable.position += vegetable.forward * vegetableSO.distanceVision * Time.deltaTime;
+            vegetable.position += vegetable.forward * vegetableSO.walkSpeed * Time.deltaTime;
         }
     }
 }

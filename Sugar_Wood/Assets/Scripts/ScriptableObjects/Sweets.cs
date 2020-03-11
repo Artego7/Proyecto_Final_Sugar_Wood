@@ -21,6 +21,8 @@ public class Sweets : ScriptableObject
 
     [Header("Set Vision Area")]
     public float distanceVision;
+    public float maxDistanceVision;
+    public float minDistanceVision;
     public Vector3 positionVision;
     public Vector3 sizeVision;
     public bool isTriggerVision;

@@ -21,9 +21,8 @@ public class Vegetables : ScriptableObject
 
     [Header("Set Vision Area")]
     public float distanceVision;
-    public Vector3 positionVision;
-    public Vector3 sizeVision;
-    public bool isTriggerVision;
+    public float maxDistanceVision;
+    public float minDistanceVision;
     [Space(10)]
 
     [Header("Set Detection Area")]

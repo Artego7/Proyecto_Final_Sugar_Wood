@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SeeingPlayer : MonoBehaviour
+public class CandySeeingPlayer : MonoBehaviour
 {
     [SerializeField]
     Sweets candySO;
@@ -17,7 +17,7 @@ public class SeeingPlayer : MonoBehaviour
     {
         
     }
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         if (other.tag == "Player")
         {

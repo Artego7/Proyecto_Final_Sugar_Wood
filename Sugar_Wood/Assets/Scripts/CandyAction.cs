@@ -30,6 +30,8 @@ public class CandyAction : MonoBehaviour
         triggerSeeingCol = transform.GetChild(0).GetComponent<BoxCollider>();
         triggerDetecting = transform.GetChild(1).GetComponent<Transform>();
         triggerDetectingCol = transform.GetChild(1).GetComponent<SphereCollider>();
+        triggerHiding = transform.GetChild(2).GetComponent<Transform>();
+        triggerHidingCol = transform.GetChild(2).GetComponent<SphereCollider>();
 
         //---------------//
 
@@ -41,9 +43,9 @@ public class CandyAction : MonoBehaviour
         triggerDetectingCol.center = candySO.positionDetection;
         triggerDetectingCol.radius = candySO.radiusDetection;
         triggerDetectingCol.isTrigger = candySO.isTriggerDetection;
-        triggerHidingCol.center = candySO.positionDetection;
-        triggerHidingCol.radius = candySO.radiusDetection;
-        triggerHidingCol.isTrigger = candySO.isTriggerDetection;
+        triggerHidingCol.center = candySO.positionHide;
+        triggerHidingCol.radius = candySO.radiusHide;
+        triggerHidingCol.isTrigger = candySO.isTriggerHide;
 
         //---------------//
     }
@@ -58,8 +60,8 @@ public class CandyAction : MonoBehaviour
         triggerSeeingCol.size = candySO.sizeVision;
         triggerDetectingCol.center = candySO.positionDetection;
         triggerDetectingCol.radius = candySO.radiusDetection;
-        triggerHidingCol.center = candySO.positionDetection;
-        triggerHidingCol.radius = candySO.radiusDetection;
+        triggerHidingCol.center = candySO.positionHide;
+        triggerHidingCol.radius = candySO.radiusHide;
         //-----------TEMP-----------//
     }
 
@@ -84,10 +86,14 @@ public class CandyAction : MonoBehaviour
             }
         }
     }
+    void HidingFromPlayer()
+    {
+
+    }
 
     void FollowPlayer()
     {
-        if(candySO.isDetectingPlayer && candySO.isSeeingPlayer)
+        if(candySO.isSeeingPlayer)
         {
             sweet.position += sweet.forward * candySO.distanceVision * Time.deltaTime;
         }
