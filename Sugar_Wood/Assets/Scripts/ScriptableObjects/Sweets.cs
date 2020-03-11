@@ -42,6 +42,12 @@ public class Sweets : ScriptableObject
 
     //-----------------//
 
+    [Header("Set Increes Weight")]
+    public float playerIncreesWeight;
+    [Space(10)]
+
+    //-----------------//
+
     [Header("Booleans")]
     public bool isSeeingPlayer;
     public bool isDetectingPlayer;

@@ -33,6 +33,12 @@ public class Vegetables : ScriptableObject
 
     //-----------------//
 
+    [Header("Set Decrees Weight")]
+    public float playerDecreesWeight;
+    [Space(10)]
+
+    //-----------------//
+
     [Header("Booleans")]
     public bool isSeeingPlayer;
     public bool isDetectingPlayer;

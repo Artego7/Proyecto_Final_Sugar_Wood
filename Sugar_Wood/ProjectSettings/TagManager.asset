@@ -16,6 +16,8 @@ TagManager:
   - inicio
   - cuidado
   - bascula_01
+  - vegetable
+  - sweet
   layers:
   - Default
   - TransparentFX

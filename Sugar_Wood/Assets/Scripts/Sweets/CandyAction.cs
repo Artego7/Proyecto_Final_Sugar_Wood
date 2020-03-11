@@ -98,4 +98,11 @@ public class CandyAction : MonoBehaviour
             sweet.position += sweet.forward * candySO.distanceVision * Time.deltaTime;
         }
     }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.collider.tag == "Player")
+        {
+            Destroy(this);
+        }
+    }
 }

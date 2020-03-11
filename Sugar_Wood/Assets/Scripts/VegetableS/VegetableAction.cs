@@ -64,9 +64,9 @@ public class VegetableAction : MonoBehaviour
             Debug.DrawRay(transform.position, transform.forward * vegetableSO.distanceVision, Color.blue, 0.1f);
             if (Physics.Raycast(transform.position, transform.forward, out whatIsInFront, vegetableSO.distanceVision))
             {
-                vegetable.position += vegetable.forward * vegetableSO.walkSpeed * Time.deltaTime;
                 if (whatIsInFront.collider.tag == "Player")
                 {
+                vegetable.position += vegetable.forward * vegetableSO.walkSpeed * Time.deltaTime;
                     vegetableSO.isSeeingPlayer = true;
                 }
                 else
@@ -74,10 +74,11 @@ public class VegetableAction : MonoBehaviour
                     vegetableSO.isSeeingPlayer = false;
                 }
             }
-            else
+            else if (vegetableSO.isDetectingPlayer)
             {
                 vegetable.rotation = Quaternion.Slerp(transform.rotation,
                     Quaternion.LookRotation(startPosition - transform.position), vegetableSO.rotationSpeed * Time.deltaTime);
+                vegetable.position += vegetable.forward * vegetableSO.walkSpeed * Time.deltaTime;
             }
         }
     }
@@ -87,6 +88,13 @@ public class VegetableAction : MonoBehaviour
         if (vegetableSO.isSeeingPlayer)
         {
             vegetable.position += vegetable.forward * vegetableSO.walkSpeed * Time.deltaTime;
+        }
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.collider.tag == "Player")
+        {
+            Destroy(this);
         }
     }
 }

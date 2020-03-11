@@ -5,11 +5,13 @@ using UnityEngine.UI;
 using UnityEditor;
 using System.IO;
 
-public class TutorialTxt : MonoBehaviour
+public class TextToShow : MonoBehaviour
 {
     //-------------------//
     [SerializeField]
     Text textShowed;
+    [SerializeField]
+    int textWanted;
     //-------------------//
     [SerializeField]
     string txtFileName;
@@ -27,7 +29,7 @@ public class TutorialTxt : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     [MenuItem("Tools/Write file")]
@@ -61,21 +63,21 @@ public class TutorialTxt : MonoBehaviour
         }
         reader.Close();
     }
-    public void ShowSelectedText(int i)
+    public void ShowSelectedText()
     {
-        textShowed.text = line[i];
+        textShowed.text = line[textWanted];
         textShowed.gameObject.SetActive(true);
-}
+    }
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "button")
+        if (other.tag == "Player")
         {
-            ShowSelectedText(0);
+            ShowSelectedText();
         }
     }
     private void OnTriggerExit(Collider other)
     {
-        if (other.tag == "button")
+        if (other.tag == "Player")
         {
             textShowed.gameObject.SetActive(false);
         }

@@ -14,6 +14,6 @@ public class CamRot : MonoBehaviour
 
     void Update()
     {
-        
+        //transform.position = cameraSO.positionCamera;
     }
 }

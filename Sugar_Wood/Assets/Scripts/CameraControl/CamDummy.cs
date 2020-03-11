@@ -14,7 +14,7 @@ public class CamDummy : MonoBehaviour
     {
         transform.position = player.position + cameraSO.positionDummy;
         //transform.Rotate(new Vector3(Input.GetAxis("Mouse Y"), Input.GetAxis("Mouse X"), 0) * Time.deltaTime * (cameraSO.delay * 30f));
-        transform.RotateAround(transform.position, Vector3.forward, Time.deltaTime * (cameraSO.delay * 30f));
+        //transform.RotateAround(transform.position, Vector3.forward, Time.deltaTime * (cameraSO.delay * 30f));
         //transform.RotateAround(transform.position, Vector3.forward, Time.deltaTime * (cameraSO.delay * 30f));
     }
 }
