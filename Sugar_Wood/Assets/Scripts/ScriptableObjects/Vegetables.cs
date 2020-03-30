@@ -5,6 +5,10 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/Vegetables", order = 1)]
 public class Vegetables : ScriptableObject
 {
+    [Header("Start Position")]
+    public Vector3 startPosition;
+    [Space(10)]
+
     [Header("Move & Jump")]
     public float walkSpeed;
     public float runSpeed;
@@ -40,6 +44,6 @@ public class Vegetables : ScriptableObject
     //-----------------//
 
     [Header("Booleans")]
-    public bool isSeeingPlayer;
+    //public bool isSeeingPlayer;
     public bool isDetectingPlayer;
 }

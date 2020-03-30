@@ -15,13 +15,14 @@ MonoBehaviour:
   maxSpeed: 12
   walkSpeed: 8
   slowSpeed: 4
+  rotation: 1
   maxJumpForce: 0
   jumpForce: 8
   slowJumpForce: 0
   climbForce: 2
   goUp: {x: 0, y: 1, z: 0}
   goDown: {x: 0, y: -1, z: 0}
-  weight: 888.3789
+  weight: 999.9834
   weightDecreesIdle: 0.01
   weightDecreesWalking: 2
   weightDecreesRuning: 4

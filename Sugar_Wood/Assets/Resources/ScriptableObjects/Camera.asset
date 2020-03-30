@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba88b0b028488f047a253ed39479194f, type: 3}
   m_Name: Camera
   m_EditorClassIdentifier: 
-  delay: 2
+  delay: 4
   positionCamera: {x: 0, y: 3.86, z: -3.65}
   positionDummy: {x: 0, y: 1.13, z: 0}
-  rotationDummy: {x: 0, y: 0, z: 0}
+  rotationDummy: {x: 0, y: 0, z: 0, w: 0}

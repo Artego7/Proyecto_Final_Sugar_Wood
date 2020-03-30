@@ -10,42 +10,33 @@ public class CandyAction : MonoBehaviour
     [Space(3)]
 
     Transform sweet;
-    Transform triggerSeeing;
-    BoxCollider triggerSeeingCol;
 
     Transform triggerDetecting;
     SphereCollider triggerDetectingCol;
-
-    Transform triggerHiding;
-    SphereCollider triggerHidingCol;
 
     [Header("Sweet ScriptableObject")]
     [SerializeField]
     Sweets candySO;
 
+    //-------TEMP-------//
+    float maxDistance = 50f;
+    float minDistance = 25f;
+    Vector3 startPosition;
+    //-------TEMP-------//
+
     void Start()
     {
         sweet = GetComponent<Transform>();
-        triggerSeeing = transform.GetChild(0).GetComponent<Transform>();
-        triggerSeeingCol = transform.GetChild(0).GetComponent<BoxCollider>();
-        triggerDetecting = transform.GetChild(1).GetComponent<Transform>();
-        triggerDetectingCol = transform.GetChild(1).GetComponent<SphereCollider>();
-        triggerHiding = transform.GetChild(2).GetComponent<Transform>();
-        triggerHidingCol = transform.GetChild(2).GetComponent<SphereCollider>();
+        triggerDetecting = transform.GetChild(0).GetComponent<Transform>();
+        triggerDetectingCol = transform.GetChild(0).GetComponent<SphereCollider>();
 
         //---------------//
 
         candySO.isSeeingPlayer = false;
         candySO.isDetectingPlayer = false;
-        triggerSeeingCol.center = candySO.positionVision;
-        triggerSeeingCol.size = candySO.sizeVision;
-        triggerSeeingCol.isTrigger = candySO.isTriggerVision;
         triggerDetectingCol.center = candySO.positionDetection;
         triggerDetectingCol.radius = candySO.radiusDetection;
         triggerDetectingCol.isTrigger = candySO.isTriggerDetection;
-        triggerHidingCol.center = candySO.positionHide;
-        triggerHidingCol.radius = candySO.radiusHide;
-        triggerHidingCol.isTrigger = candySO.isTriggerHide;
 
         //---------------//
     }
@@ -53,36 +44,40 @@ public class CandyAction : MonoBehaviour
     void Update()
     {
         DetectingPlayer();
-        FollowPlayer();
+        //RunAwayFromPlayer();
 
         //-----------TEMP-----------//
-        triggerSeeingCol.center = candySO.positionVision;
-        triggerSeeingCol.size = candySO.sizeVision;
         triggerDetectingCol.center = candySO.positionDetection;
         triggerDetectingCol.radius = candySO.radiusDetection;
-        triggerHidingCol.center = candySO.positionHide;
-        triggerHidingCol.radius = candySO.radiusHide;
         //-----------TEMP-----------//
     }
 
     void DetectingPlayer()
     {
-        if (candySO.isDetectingPlayer)
+        if (Vector3.Distance(transform.position, player.position) < maxDistance
+            && Vector3.Distance(transform.position, player.position) < minDistance)
         {
-            sweet.rotation = Quaternion.Slerp(triggerSeeing.rotation, 
-                Quaternion.LookRotation(player.position - triggerSeeing.position), candySO.rotationSpeed * Time.deltaTime);
+            sweet.rotation = Quaternion.Slerp(transform.rotation, 
+                Quaternion.LookRotation(player.position - transform.position), candySO.rotationSpeed * Time.deltaTime);
             RaycastHit whatIsInFront;
-            Debug.DrawRay(triggerSeeing.position, triggerSeeing.forward * candySO.distanceVision, Color.blue, 0.1f);
-            if (Physics.Raycast(triggerSeeing.position, triggerSeeing.forward, out whatIsInFront, candySO.distanceVision))
+            Debug.DrawRay(transform.position, transform.forward * candySO.distanceVision, Color.blue, 0.1f);
+            if (Physics.Raycast(transform.position, transform.forward, out whatIsInFront, candySO.distanceVision))
             {
                 if(whatIsInFront.collider.tag == "Player")
                 {
+                    RunAwayFromPlayer();
                     candySO.isSeeingPlayer = true;
                 }
                 else
                 {
                     candySO.isSeeingPlayer = false;
                 }
+            }
+            else if (candySO.isDetectingPlayer)
+            {
+                sweet.rotation = Quaternion.Slerp(transform.rotation,
+                    Quaternion.LookRotation(startPosition - transform.position), candySO.rotationSpeed * Time.deltaTime);
+                RunAwayFromPlayer();
             }
         }
     }
@@ -91,11 +86,11 @@ public class CandyAction : MonoBehaviour
 
     }
 
-    void FollowPlayer()
+    void RunAwayFromPlayer()
     {
         if(candySO.isSeeingPlayer)
         {
-            sweet.position += sweet.forward * candySO.distanceVision * Time.deltaTime;
+            sweet.position -= sweet.forward * candySO.distanceVision * Time.deltaTime;
         }
     }
     private void OnCollisionEnter(Collision collision)

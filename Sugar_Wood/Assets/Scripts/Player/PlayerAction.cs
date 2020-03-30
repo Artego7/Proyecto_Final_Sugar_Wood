@@ -25,17 +25,19 @@ public class PlayerAction : MonoBehaviour
         playerSO.isTouchingGround = true;
         playerSO.isClimbing = false;
         playerSO.isJumping = false;
-
+        playerSO.weight = 60f;
     }
 
     void Update()
     {
         DecreesWeight();
+        IncreesWeight();
+        //print(rb.velocity);
     }
 
     void FixedUpdate()
     {
-
+        rotate();
         if (Input.GetKey(KeyCode.LeftShift))
         {
             movement(playerSO.maxSpeed);
@@ -142,6 +144,20 @@ public class PlayerAction : MonoBehaviour
                 rb.position = new Vector3(rb.position.x, tempPosition.y, rb.position.z);
                 //anim.GetComponent<Animator>().SetBool("Climb",false);
             }
+        }
+    }
+
+    void rotate()
+    {
+        if (Input.GetKey(KeyCode.LeftArrow))
+        {
+            //transform.Rotate -= playerSO.rotation;
+            transform.Rotate(new Vector3(0f, -playerSO.rotation, 0f));
+        }
+        if(Input.GetKey(KeyCode.RightArrow))
+        {
+            //transform.Rotate -= playerSO.rotation;
+            transform.Rotate(new Vector3(0f, playerSO.rotation, 0f));
         }
     }
 
