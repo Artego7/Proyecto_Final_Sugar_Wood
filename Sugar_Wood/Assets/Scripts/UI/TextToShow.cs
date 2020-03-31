@@ -32,24 +32,6 @@ public class TextToShow : MonoBehaviour
 
     }
 
-    [MenuItem("Tools/Write file")]
-    void WriteString()
-    {
-        //string path = "Assets/Resources/TextToShow/TutorialText/TutorialText.txt";
-
-        ////Write some text to the test.txt file
-        //StreamWriter writer = new StreamWriter(path, true);
-        //writer.WriteLine("TutorialText");
-        //writer.Close();
-
-        ////Re-import the file to update the reference in the editor
-        //AssetDatabase.ImportAsset(path);
-        //TextAsset asset = Resources.Load("TutorialText");
-
-        ////Print the text from the file
-        //Debug.Log(asset.text);
-    }
-
     [MenuItem("Tools/Read file")]
     void ReadString()
     {
@@ -57,10 +39,10 @@ public class TextToShow : MonoBehaviour
         string contenido = reader.ReadToEnd();
         line = contenido.Split('\n');
 
-        for (int i = 0; i < line.Length; i++)
-        {
-            print(line[i]);
-        }
+        //for (int i = 0; i < line.Length; i++)
+        //{
+        //    print(line[i]);
+        //}
         reader.Close();
     }
     public void ShowSelectedText()

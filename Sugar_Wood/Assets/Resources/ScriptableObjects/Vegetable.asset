@@ -12,15 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5dd67c3a1e43ed4f929db6b656b30a1, type: 3}
   m_Name: Vegetable
   m_EditorClassIdentifier: 
+  startPosition: {x: -38.12, y: 0.52, z: -1.59}
   walkSpeed: 2
   runSpeed: 7
   jumpForce: 5
   rotationSpeed: 5
   distanceVision: 100
-  maxDistanceVision: 13.01
-  minDistanceVision: 8.95
+  maxDistanceVision: 50
+  minDistanceVision: 25
   positionDetection: {x: 0, y: 0, z: 0}
-  radiusDetection: 16.18023
+  radiusDetection: 23.48
   isTriggerDetection: 1
-  isSeeingPlayer: 1
+  playerDecreesWeight: 0
   isDetectingPlayer: 0

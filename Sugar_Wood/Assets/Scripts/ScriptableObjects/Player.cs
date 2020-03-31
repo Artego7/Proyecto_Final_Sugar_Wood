@@ -12,6 +12,10 @@ public class Player : ScriptableObject
     public float slowSpeed;
     [Space(10)]
     //-----------------//
+    [Header("Set Rotation")]
+    public float rotation;
+    [Space(10)]
+    //-----------------//
     [Header("Set Jump/Climb Force")]
     public float maxJumpForce;
     public float jumpForce;
