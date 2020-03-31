@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Camera
   m_EditorClassIdentifier: 
   delay: 4
-  positionCamera: {x: 0, y: 3.86, z: -3.65}
-  positionDummy: {x: 0, y: 1.13, z: 0}
+  positionCamera: {x: -2.778, y: 2.44, z: 37.359}
+  positionDummy: {x: 0, y: 1.15, z: 0}
+  positionRot: {x: 0, y: 0.624, z: -2.33}
   rotationDummy: {x: 0, y: 0, z: 0, w: 0}

@@ -9,6 +9,10 @@ public class CamDummy : MonoBehaviour
     [SerializeField]
     Camera cameraSO;
 
+    void Start()
+    {
+        cameraSO.positionCamera = transform.position + cameraSO.positionRot;
+    }
     // Update is called once per frame
     void Update()
     {

@@ -97,6 +97,7 @@ public class PlayerAction : MonoBehaviour
         if (!Input.anyKey)
         {
             rb.drag = playerSO.dragForce;
+            StartCoroutine(forceDrag());
         }
         if (rb.velocity == new Vector3(0, 0, 0) || Input.anyKey)
         {
@@ -104,6 +105,14 @@ public class PlayerAction : MonoBehaviour
         }
         rb.velocity = Vector3.ClampMagnitude(rb.velocity, playerSO.walkSpeed);
 
+    }
+    IEnumerator forceDrag()
+    {
+        yield return new WaitForSeconds(0.5f);
+        if(rb.velocity != new Vector3(0, 0, 0) && !Input.anyKey && !playerSO.isJumping)
+        {
+            rb.velocity = new Vector3(0, 0, 0);
+        }
     }
 
     void jump(float jumpForce)
