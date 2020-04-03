@@ -18,6 +18,7 @@ TagManager:
   - bascula_01
   - vegetable
   - sweet
+  - HidePoint
   layers:
   - Default
   - TransparentFX

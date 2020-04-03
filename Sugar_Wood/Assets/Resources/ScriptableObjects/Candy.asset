@@ -12,21 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ee9f3c9ebda04a408d76f38b5d445e2, type: 3}
   m_Name: Candy
   m_EditorClassIdentifier: 
-  walkSpeed: 5
+  startPosition: {x: -40.4, y: 1.032, z: 20.5}
+  walkSpeed: 4
   runSpeed: 7
   jumpForce: 5
   rotationSpeed: 5
-  distanceVision: 40
-  maxDistanceVision: 0
-  minDistanceVision: 0
-  positionVision: {x: 0, y: 0.99, z: 3.97}
-  sizeVision: {x: 13.81, y: 3.3, z: 16.38}
-  isTriggerVision: 1
+  distanceVision: 100
+  maxDistanceVision: 50
+  minDistanceVision: 25
   positionDetection: {x: -0, y: 0, z: 0}
-  radiusDetection: 28.09
+  radiusDetection: 35
   isTriggerDetection: 1
-  positionHide: {x: 0, y: 0, z: 0}
-  radiusHide: 16.95
-  isTriggerHide: 1
+  playerIncreesWeight: 0
   isSeeingPlayer: 0
+  isGoingToHidePoint: 0
   isDetectingPlayer: 0

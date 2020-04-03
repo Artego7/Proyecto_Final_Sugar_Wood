@@ -8,6 +8,8 @@ public class PlayerAction : MonoBehaviour
     [SerializeField]
     Player playerSO;
     [SerializeField]
+    Camera cameraSO;
+    [SerializeField]
     Sweets[] sweet;
     [SerializeField]
     Vegetables[] vegetables;
@@ -16,6 +18,16 @@ public class PlayerAction : MonoBehaviour
 
     //------------------//
     Vector3 tempPosition;
+
+    enum moveDecreesEnum
+    {
+        walking,
+        jumping,
+        climbing,
+        onSand
+    }
+    moveDecreesEnum moveDecrees;
+    bool moving;
 
     void Start()
     {
@@ -30,14 +42,12 @@ public class PlayerAction : MonoBehaviour
 
     void Update()
     {
-        DecreesWeight();
         IncreesWeight();
-        //print(rb.velocity);
+        //print(transform.eulerAngles);
     }
 
     void FixedUpdate()
     {
-        rotate();
         if (Input.GetKey(KeyCode.LeftShift))
         {
             movement(playerSO.maxSpeed);
@@ -67,51 +77,48 @@ public class PlayerAction : MonoBehaviour
         //Front
         if (!playerSO.isClimbing)
         {
-            if (Input.GetKey(KeyCode.W) && rb.drag == 0f)
+            if (Input.GetKey(KeyCode.W))
             {
-                rb.AddForce(transform.forward * playerSpeed);
+                transform.Translate(Vector3.forward * playerSpeed * Time.deltaTime);
                 //anim.GetComponent<Animator>().SetBool("Walk", true);
+                moving = true;
             }
         }
         //Back
         if (!playerSO.isClimbing || playerSO.isTouchingGround)
         {
-            if (Input.GetKey(KeyCode.S) && rb.drag == 0f)
+            if (Input.GetKey(KeyCode.S))
             {
-                rb.AddForce(transform.forward * -playerSpeed);
+                transform.Translate(Vector3.forward * -playerSpeed * Time.deltaTime);
                 //anim.GetComponent<Animator>().SetBool("Walk", true);
+                moving = true;
             }
         }
         ////Right
-        if (Input.GetKey(KeyCode.D) && rb.drag == 0f)
+        if (Input.GetKey(KeyCode.D))
         {
-            rb.AddForce(transform.right * playerSpeed);
+            transform.Translate(Vector3.right * playerSpeed * Time.deltaTime);
             //anim.GetComponent<Animator>().SetBool("Walk", true);
+            moving = true;
         }
         ////Left
-        else if (Input.GetKey(KeyCode.A) && rb.drag == 0f)
+        if (Input.GetKey(KeyCode.A))
         {
-            rb.AddForce(transform.right * -playerSpeed);
-            //anim.GetComponent<Animator>().SetBool("Walk", true);
-        }
-        if (!Input.anyKey)
-        {
-            rb.drag = playerSO.dragForce;
-            StartCoroutine(forceDrag());
-        }
-        if (rb.velocity == new Vector3(0, 0, 0) || Input.anyKey)
-        {
-            rb.drag = 0f;
-        }
-        rb.velocity = Vector3.ClampMagnitude(rb.velocity, playerSO.walkSpeed);
 
-    }
-    IEnumerator forceDrag()
-    {
-        yield return new WaitForSeconds(0.5f);
-        if(rb.velocity != new Vector3(0, 0, 0) && !Input.anyKey && !playerSO.isJumping)
+            transform.Translate(Vector3.right * -playerSpeed * Time.deltaTime);
+            //anim.GetComponent<Animator>().SetBool("Walk", true);
+            moving = true;
+        }
+        if (!Input.GetKey(KeyCode.W) &&
+            !Input.GetKey(KeyCode.A) &&
+            !Input.GetKey(KeyCode.S) &&
+            !Input.GetKey(KeyCode.D))
         {
-            rb.velocity = new Vector3(0, 0, 0);
+            moving = false;
+        }
+        if (moving && !playerSO.isClimbing)
+        {
+            transform.eulerAngles = new Vector3(0f, cameraSO.rotationDummy.y, 0f);
         }
     }
 
@@ -132,126 +139,112 @@ public class PlayerAction : MonoBehaviour
     {
         if (playerSO.isClimbing)
         {
-
-            if (Input.GetKey(KeyCode.W) && rb.drag == 0f)
+            rb.useGravity = false;
+            if (Input.GetKey(KeyCode.W))
             {
                 print("gola");
-                //rb.position += new Vector3(0f,playerSO.climbForce,0f);
-                rb.velocity = new Vector3(rb.velocity.x, transform.up.y * playerSO.climbForce, rb.velocity.z);
-                //rb.AddForce(rb.velocity.x, transform.up.y * playerSO.climbForce, rb.velocity.z);
+                transform.position += new Vector3(0f, playerSO.climbForce * Time.deltaTime, 0f);
                 //anim.GetComponent<Animator>().SetBool("Climb",true);
-                tempPosition = rb.position;
+                tempPosition = transform.position;
             }
-            else if (Input.GetKey(KeyCode.S) && rb.drag == 0f && !playerSO.isTouchingGround)
+            else if (Input.GetKey(KeyCode.S) && !playerSO.isTouchingGround)
             {
-                rb.velocity = new Vector3(rb.velocity.x, transform.up.y * -playerSO.climbForce, rb.velocity.z);
+                transform.Translate(Vector3.down * playerSO.climbForce * Time.deltaTime);
                 //anim.GetComponent<Animator>().SetBool("Climb",true);
-                tempPosition = rb.position;
+                tempPosition = transform.position;
             }
             else
             {
-                rb.position = new Vector3(rb.position.x, tempPosition.y, rb.position.z);
+                transform.position = new Vector3(transform.position.x, tempPosition.y, transform.position.z);
                 //anim.GetComponent<Animator>().SetBool("Climb",false);
             }
         }
-    }
-
-    void rotate()
-    {
-        if (Input.GetKey(KeyCode.LeftArrow))
+        else
         {
-            //transform.Rotate -= playerSO.rotation;
-            transform.Rotate(new Vector3(0f, -playerSO.rotation, 0f));
-        }
-        if(Input.GetKey(KeyCode.RightArrow))
-        {
-            //transform.Rotate -= playerSO.rotation;
-            transform.Rotate(new Vector3(0f, playerSO.rotation, 0f));
+            rb.useGravity = true;
         }
     }
 
     void DecreesWeight()
     {
-        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S)
-            || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.W))
+        if (playerSO.isTouchingGround && !playerSO.isClimbing
+            && !playerSO.isJumping && !playerSO.isOnSand)
         {
-            if (playerSO.isTouchingGround && !playerSO.isClimbing
-                && !playerSO.isJumping && !playerSO.isOnSand)
+            //Runing
+            if (Input.GetKey(KeyCode.LeftShift))
             {
-                //Runing
-                if (Input.GetKey(KeyCode.LeftShift))
-                {
-                    playerSO.weight -= playerSO.weightDecreesRuning * Time.deltaTime;
-                }
-                //Walking
-                else
-                {
-                    playerSO.weight -= playerSO.weightDecreesWalking * Time.deltaTime;
-                }
+                    DecreesWeight(playerSO.weightDecreesRuning);
             }
-            else if(playerSO.isJumping)
+            //Walking
+            else
             {
-                //Jumping & Runing
-                if (Input.GetKey(KeyCode.LeftShift))
-                {
-                    playerSO.weight -= (playerSO.weightDecreesJumping + playerSO.weightDecreesRuning) * Time.deltaTime;
-                }
-                //Jumping
-                else
-                {
-                    playerSO.weight -= playerSO.weightDecreesJumping * Time.deltaTime;
-                }
+                    DecreesWeight(playerSO.weightDecreesWalking);
             }
-            else if (playerSO.isClimbing)
+        }
+        else if (playerSO.isJumping)
+        {
+            //Jumping & Runing
+            if (Input.GetKey(KeyCode.LeftShift))
             {
-                //Climbing & Runing
-                if (Input.GetKey(KeyCode.LeftShift))
-                {
-                    playerSO.weight -= (playerSO.weightDecreesClimbing + playerSO.weightDecreesRuning) * Time.deltaTime;
-                }
-                //Climbing On Sand
-                else if (playerSO.isOnSand)
-                {
-                    playerSO.weight -= (playerSO.weightDecreesClimbing + playerSO.weightDecreesOnSand) * Time.deltaTime;
-                }
-                //Climbing
-                else
-                {
-                    playerSO.weight -= playerSO.weightDecreesClimbing * Time.deltaTime;
-                }
+                    DecreesWeight((playerSO.weightDecreesJumping + playerSO.weightDecreesRuning));
             }
+            //Jumping
+            else
+            {
+                    DecreesWeight(playerSO.weightDecreesJumping);
+            }
+        }
+        else if (playerSO.isClimbing)
+        {
+            //Climbing & Runing
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                    DecreesWeight((playerSO.weightDecreesClimbing + playerSO.weightDecreesRuning));
+            }
+            //Climbing On Sand
             else if (playerSO.isOnSand)
             {
-                if (Input.GetKey(KeyCode.LeftShift))
+                    DecreesWeight((playerSO.weightDecreesClimbing + playerSO.weightDecreesOnSand));
+            }
+            //Climbing
+            else
+            {
+                    DecreesWeight(playerSO.weightDecreesClimbing);
+            }
+        }
+        else if (playerSO.isOnSand)
+        {
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                //Runing & Jump On Sand
+                if (playerSO.isJumping)
                 {
-                    //Runing & Jump On Sand
-                    if(playerSO.isJumping)
-                    {
-                        playerSO.weight -= (playerSO.weightDecreesOnSand + playerSO.weightDecreesRuning + playerSO.weightDecreesJumping) * Time.deltaTime;
-                    }
-                    //Runing On Sand
-                    else
-                    {
-                        playerSO.weight -= (playerSO.weightDecreesOnSand + playerSO.weightDecreesRuning) * Time.deltaTime;
-                    }
+                    DecreesWeight((playerSO.weightDecreesOnSand + playerSO.weightDecreesRuning + playerSO.weightDecreesJumping));
                 }
-                //Jumping On Sand
-                else if (playerSO.isJumping)
-                {
-                    playerSO.weight -= (playerSO.weightDecreesOnSand + playerSO.weightDecreesJumping) * Time.deltaTime;
-                }
-                //On Sand
+                //Runing On Sand
                 else
                 {
-                    playerSO.weight -= playerSO.weightDecreesOnSand * Time.deltaTime;
+                    DecreesWeight((playerSO.weightDecreesOnSand + playerSO.weightDecreesRuning));
                 }
+            }
+            //Jumping On Sand
+            else if (playerSO.isJumping)
+            {
+                DecreesWeight((playerSO.weightDecreesOnSand + playerSO.weightDecreesJumping));
+            }
+            //On Sand
+            else
+            {
+                DecreesWeight(playerSO.weightDecreesOnSand);
             }
         }
         //Idle
-        else
-        {
-            playerSO.weight -= playerSO.weightDecreesIdle * Time.deltaTime;
-        }
+        //playerSO.weight -= playerSO.weightDecreesIdle * Time.deltaTime;
+
+    }
+    void DecreesWeight(float weightToDecrees)
+    {
+        playerSO.weight -= weightToDecrees * Time.deltaTime;
     }
 
     void IncreesWeight()
@@ -285,12 +278,19 @@ public class PlayerAction : MonoBehaviour
         }
     }
 
+    private void OnCollisionStay(Collision collision)
+    {
+        if (collision.collider.tag == "floor" || collision.collider.tag == "platform" || collision.collider.tag == "button")
+        {
+            playerSO.isTouchingGround = true;
+        }
+    }
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.collider.tag == "floor" || collision.collider.tag == "platform" || collision.collider.tag == "button")
         {
             playerSO.isJumping = false;
-            playerSO.isTouchingGround = true;
+
             //anim.GetComponent<Animator>().SetBool("IsInAir?",false);
         }
         if (collision.collider.tag == "sweet")
@@ -311,4 +311,13 @@ public class PlayerAction : MonoBehaviour
             //anim.GetComponent<Animator>().SetBool("IsInAir?",false);
         }
     }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.green;
+        Gizmos.DrawRay(new Ray(transform.position, transform.forward * 100f));
+        Gizmos.color = Color.blue;
+        Gizmos.DrawRay(new Ray(transform.position, transform.right * 100f));
+    }
+
 }

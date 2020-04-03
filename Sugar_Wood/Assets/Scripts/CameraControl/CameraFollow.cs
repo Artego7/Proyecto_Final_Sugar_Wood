@@ -6,8 +6,6 @@ public class CameraFollow : MonoBehaviour
 {
 
     [SerializeField]
-    Transform camRot;
-    [SerializeField]
     Transform camDummy;
     //---------------//
     [SerializeField]
@@ -18,11 +16,13 @@ public class CameraFollow : MonoBehaviour
     void Start()
     {
 
+        transform.position = cameraSO.positionCamera;
     }
 
     void Update()
     {
-        transform.position = Vector3.Lerp(transform.position, camRot.position, cameraSO.delay * Time.deltaTime);
-        transform.LookAt(camDummy);
+
+        //transform.position = Vector3.Lerp(transform.position, cameraSO.positionRot, cameraSO.delay * Time.deltaTime);
+        //transform.LookAt(camDummy);
     }
 }

@@ -5,6 +5,10 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/Sweets", order = 1)]
 public class Sweets : ScriptableObject
 {
+    [Header("Start Position")]
+    public Vector3 startPosition;
+    [Space(10)]
+
     [Header("Move & Jump")]
     public float walkSpeed;
     public float runSpeed;
@@ -23,21 +27,12 @@ public class Sweets : ScriptableObject
     public float distanceVision;
     public float maxDistanceVision;
     public float minDistanceVision;
-    public Vector3 positionVision;
-    public Vector3 sizeVision;
-    public bool isTriggerVision;
     [Space(10)]
 
     [Header("Set Detection Area")]
     public Vector3 positionDetection;
     public float radiusDetection;
     public bool isTriggerDetection;
-    [Space(10)]
-
-    [Header("Set Hide Area")]
-    public Vector3 positionHide;
-    public float radiusHide;
-    public bool isTriggerHide;
     [Space(10)]
 
     //-----------------//
@@ -50,5 +45,6 @@ public class Sweets : ScriptableObject
 
     [Header("Booleans")]
     public bool isSeeingPlayer;
+    public bool isGoingToHidePoint;
     public bool isDetectingPlayer;
 }

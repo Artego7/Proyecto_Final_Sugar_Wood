@@ -13,16 +13,16 @@ MonoBehaviour:
   m_Name: Player
   m_EditorClassIdentifier: 
   maxSpeed: 12
-  walkSpeed: 8
+  walkSpeed: 6
   slowSpeed: 4
   rotation: 1
   maxJumpForce: 0
   jumpForce: 8
   slowJumpForce: 0
-  climbForce: 2
+  climbForce: 5
   goUp: {x: 0, y: 1, z: 0}
   goDown: {x: 0, y: -1, z: 0}
-  weight: 999.9834
+  weight: 60
   weightDecreesIdle: 0.01
   weightDecreesWalking: 2
   weightDecreesRuning: 4

@@ -9,7 +9,6 @@ public class Camera : ScriptableObject
     //-------------------//
     public Vector3 positionCamera;
     public Vector3 positionDummy;
-    public Vector3 positionRot;
-    public Quaternion rotationDummy;
+    public Vector3 rotationDummy;
 
 }

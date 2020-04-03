@@ -46,7 +46,7 @@ public class VegetableAction : MonoBehaviour
             vegetable.rotation = Quaternion.Slerp(transform.rotation,
                 Quaternion.LookRotation(player.position - transform.position), vegetableSO.rotationSpeed * Time.deltaTime);
             RaycastHit whatIsInFront;
-            Debug.DrawRay(transform.position, transform.forward * vegetableSO.distanceVision, Color.blue, 0.1f);
+            Debug.DrawRay(transform.position, transform.forward * vegetableSO.distanceVision, Color.red, 0.1f);
             if (Physics.Raycast(transform.position, transform.forward, out whatIsInFront, vegetableSO.distanceVision))
             {
                 if (whatIsInFront.collider.tag == "Player")

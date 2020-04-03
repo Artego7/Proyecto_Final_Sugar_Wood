@@ -17,7 +17,7 @@ public class TextToShow : MonoBehaviour
     string txtFileName;
 
     string[] line;
-    string path = "Assets/Resources/TextToShow/TutorialText/";
+    string path = "TextToShow/TutorialText/";
     //-------------------//
 
 
@@ -26,24 +26,16 @@ public class TextToShow : MonoBehaviour
         ReadString();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
-    [MenuItem("Tools/Read file")]
     void ReadString()
     {
-        StreamReader reader = new StreamReader(path + txtFileName);
-        string contenido = reader.ReadToEnd();
+        string contenido = Resources.Load(path + txtFileName).ToString();
         line = contenido.Split('\n');
 
         //for (int i = 0; i < line.Length; i++)
         //{
         //    print(line[i]);
         //}
-        reader.Close();
+
     }
     public void ShowSelectedText()
     {

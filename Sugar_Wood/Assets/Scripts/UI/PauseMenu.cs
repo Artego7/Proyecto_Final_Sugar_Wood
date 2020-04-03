@@ -43,10 +43,11 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 0f;
         GameIsPaused = true;
     }
-
+        
     public void RestartGame()
     {
         Time.timeScale = 1f;
+        SceneManager.LoadScene("Zona01");
         //Cargar Nivel Desde el Inicio
     }
 

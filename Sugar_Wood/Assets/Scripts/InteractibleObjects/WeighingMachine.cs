@@ -6,6 +6,12 @@ public class WeighingMachine : MonoBehaviour
 {
     [SerializeField]
     Player player;
+
+    [SerializeField]
+    GameObject puente;
+    [SerializeField]
+    GameObject puente2;
+
     [SerializeField]
     int maxWeight;
 
@@ -25,7 +31,8 @@ public class WeighingMachine : MonoBehaviour
         if(collision.collider.tag == "Player")
         {
             if(player.weight >= maxWeight)
-            //endLevel
+                puente.GetComponent<Bridge>().puenteActivo = true;
+                puente2.GetComponent<Bridge>().puenteActivo = true;
             print("end game");
         }
     }
