@@ -30,7 +30,7 @@ public class CandyDetectingPlayer : MonoBehaviour
     {
         if (other.tag == "HidePoint")
         {
-            print("hidePoint");
+            //print("hidePoint");
             if (sweetSO.isSeeingPlayer && !sweetSO.isGoingToHidePoint)
             {
                 print("hidePoint see");

@@ -103,7 +103,7 @@ public class CandyAction : MonoBehaviour
 
     void HideingFromPlayer()
     {
-        print("go hide");
+        //print("go hide");
         if (sweetSO.isGoingToHidePoint)
         {
             Transform posToHide = transform.GetChild(0).GetComponent<CandyDetectingPlayer>().posHidePoint;
