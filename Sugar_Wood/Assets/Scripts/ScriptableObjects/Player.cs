@@ -17,7 +17,6 @@ public class Player : ScriptableObject
     [Space(10)]
     //-----------------//
     [Header("Set Jump/Climb Force")]
-    public float maxJumpForce;
     public float jumpForce;
     public float slowJumpForce;
     public float climbForce;
@@ -44,4 +43,8 @@ public class Player : ScriptableObject
     public bool isJumping;
     public bool isClimbing;
     public bool isOnSand;
+    public bool isOnGelatine;
+    [Space(10)]
+    [Header("Set Increesed Weight From Unanimed Sweets")]
+    public float[] weightIncreesSweet;
 }

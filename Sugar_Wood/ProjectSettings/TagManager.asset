@@ -19,6 +19,7 @@ TagManager:
   - vegetable
   - sweet
   - HidePoint
+  - gelatine
   layers:
   - Default
   - TransparentFX

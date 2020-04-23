@@ -37,13 +37,14 @@ public class PlayerAction : MonoBehaviour
         playerSO.isTouchingGround = true;
         playerSO.isClimbing = false;
         playerSO.isJumping = false;
+        playerSO.isOnGelatine = false;
         playerSO.weight = 60f;
     }
 
     void Update()
     {
-        IncreesWeight();
         //print(transform.eulerAngles);
+        GelatineMode();
     }
 
     void FixedUpdate()
@@ -247,9 +248,21 @@ public class PlayerAction : MonoBehaviour
         playerSO.weight -= weightToDecrees * Time.deltaTime;
     }
 
-    void IncreesWeight()
+    void IncreesWeight(int sweet)
     {
+        playerSO.weight += playerSO.weightIncreesSweet[sweet];
+    }
 
+    void GelatineMode()
+    {
+        if (playerSO.isOnGelatine)
+        {
+            transform.GetComponent<CapsuleCollider>().material.bounciness = 1f;
+        }
+        else
+        {
+            transform.GetComponent<CapsuleCollider>().material.bounciness = 0f;
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -280,18 +293,30 @@ public class PlayerAction : MonoBehaviour
 
     private void OnCollisionStay(Collision collision)
     {
-        if (collision.collider.tag == "floor" || collision.collider.tag == "platform" || collision.collider.tag == "button")
+        if (collision.collider.tag == "floor" || collision.collider.tag == "platform" 
+            || collision.collider.tag == "button" || collision.collider.tag == "gelatine")
         {
             playerSO.isTouchingGround = true;
         }
     }
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.collider.tag == "floor" || collision.collider.tag == "platform" || collision.collider.tag == "button")
+        if (collision.collider.tag == "floor" || collision.collider.tag == "platform" 
+            || collision.collider.tag == "button" || collision.collider.tag == "gelatine")
         {
             playerSO.isJumping = false;
 
             //anim.GetComponent<Animator>().SetBool("IsInAir?",false);
+        }
+        if (collision.collider.tag == "gelatine")
+        {
+            playerSO.isOnGelatine = true;
+            //anim.GetComponent<Animator>().SetBool("IsOnGelatine",false);
+        }
+        else
+        {
+            playerSO.isOnGelatine = false;
+            //anim.GetComponent<Animator>().SetBool("IsOnGelatine",false);
         }
         if (collision.collider.tag == "sweet")
         {
@@ -301,11 +326,25 @@ public class PlayerAction : MonoBehaviour
         {
             playerSO.weight -= vegetables[0].playerDecreesWeight;
         }
+        switch (collision.collider.tag)
+        {
+            case "candy":
+                IncreesWeight(0);
+                break;
+            case "muffin":
+                IncreesWeight(1);
+                break;
+            case "cake":
+                IncreesWeight(2);
+                break;
+
+        }
     }
 
     private void OnCollisionExit(Collision collision)
     {
-        if (collision.collider.tag == "floor" || collision.collider.tag == "platform" || collision.collider.tag == "button")
+        if (collision.collider.tag == "floor" || collision.collider.tag == "platform" 
+            || collision.collider.tag == "button" || collision.collider.tag == "gelatine")
         {
             playerSO.isTouchingGround = false;
             //anim.GetComponent<Animator>().SetBool("IsInAir?",false);

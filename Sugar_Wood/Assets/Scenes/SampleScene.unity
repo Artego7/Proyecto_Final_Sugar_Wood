@@ -3521,7 +3521,7 @@ GameObject:
   - component: {fileID: 1930582817}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: floor
+  m_TagString: gelatine
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4431,6 +4431,11 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: c4dc34189a8ed1740b9a9e35bf1935ee, type: 2}
+    - target: {fileID: 4792164431285662958, guid: c746a8745ddcc8240b22c81763ab0ead,
+        type: 3}
+      propertyPath: m_Drag
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c746a8745ddcc8240b22c81763ab0ead, type: 3}
 --- !u!1001 &5807349334124594454

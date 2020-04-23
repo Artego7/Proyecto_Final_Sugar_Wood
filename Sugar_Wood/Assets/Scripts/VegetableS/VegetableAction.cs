@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class VegetableAction : MonoBehaviour
 {
@@ -18,11 +19,14 @@ public class VegetableAction : MonoBehaviour
     [SerializeField]
     Vegetables vegetableSO;
 
+    NavMeshAgent agent;
+
     void Start()
     {
         vegetable = GetComponent<Transform>();
         triggerDetecting = transform.GetChild(0).GetComponent<Transform>();
         triggerDetectingCol = transform.GetChild(0).GetComponent<SphereCollider>();
+        agent = GetComponent<NavMeshAgent>();
         vegetableSO.startPosition = transform.position;
         vegetableSO.isDetectingPlayer = false;
         triggerDetectingCol.center = vegetableSO.positionDetection;
@@ -52,6 +56,7 @@ public class VegetableAction : MonoBehaviour
                 if (whatIsInFront.collider.tag == "Player")
                 {
                     GoForward();
+                    agent.SetDestination(player.position);
                 }
             }
         }
@@ -68,7 +73,7 @@ public class VegetableAction : MonoBehaviour
         {
             vegetable.rotation = Quaternion.Slerp(transform.rotation,
                 Quaternion.LookRotation(vegetableSO.startPosition - transform.position), vegetableSO.rotationSpeed * Time.deltaTime);
-            GoForward();
+            agent.SetDestination(vegetableSO.startPosition);
         }
     }
 
@@ -80,7 +85,7 @@ public class VegetableAction : MonoBehaviour
     {
         if (collision.collider.tag == "Player")
         {
-            Destroy(this);
+            Destroy(gameObject);
         }
     }
 }

@@ -16,13 +16,12 @@ MonoBehaviour:
   walkSpeed: 6
   slowSpeed: 4
   rotation: 1
-  maxJumpForce: 0
   jumpForce: 8
-  slowJumpForce: 0
+  slowJumpForce: 4
   climbForce: 5
   goUp: {x: 0, y: 1, z: 0}
   goDown: {x: 0, y: -1, z: 0}
-  weight: 60
+  weight: 1000
   weightDecreesIdle: 0.01
   weightDecreesWalking: 2
   weightDecreesRuning: 4
@@ -30,7 +29,12 @@ MonoBehaviour:
   weightDecreesClimbing: 6
   weightDecreesOnSand: 4
   dragForce: 1.5
-  isTouchingGround: 1
+  isTouchingGround: 0
   isJumping: 0
   isClimbing: 0
   isOnSand: 0
+  isOnGelatine: 1
+  weightIncreesSweet:
+  - 1
+  - 5
+  - 10
